@@ -1,0 +1,38 @@
+{% extends 'book_app/base.html' %}
+
+{% block content %}
+<h2>Book List</h2>
+{% if books %}
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Publication Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td><a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a></td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.get_genre_display }}</td>
+            <td>{{ book.publication_date }}</td>
+            <td>
+                <a href="{% url 'book_edit' book.pk %}" class="btn">Edit</a>
+                <a href="{% url 'book_delete' book.pk %}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No books available.</p>
+{% endif %}
+
+<div style="margin-top: 20px;">
+    <a href="{% url 'book_create' %}" class="btn">Add New Book</a>
+</div>
+{% endblock %}
